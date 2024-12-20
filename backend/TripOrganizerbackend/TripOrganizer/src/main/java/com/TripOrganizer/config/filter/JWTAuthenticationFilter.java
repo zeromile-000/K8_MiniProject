@@ -68,6 +68,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 						 .sign(Algorithm.HMAC256("com.TripOrganizer.jwt"));
 		 response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 		 response.setStatus(HttpStatus.OK.value());
+		 chain.doFilter(request, response);
 	
 	}
 

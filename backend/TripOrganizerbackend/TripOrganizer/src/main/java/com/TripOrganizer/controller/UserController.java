@@ -33,6 +33,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         // Login authentication logic can be implemented here.
-        return ResponseEntity.ok("로그인에 성공하셨씁니다.");
+        return ResponseEntity.ok("로그인 성공");
     }
 }
