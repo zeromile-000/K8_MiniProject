@@ -1,38 +1,63 @@
 package com.TripOrganizer.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.TripOrganizer.domain.LoginRequest;
-import com.TripOrganizer.domain.SignupRequest;
+import com.TripOrganizer.domain.Member;
 import com.TripOrganizer.service.MemberRegistrationService;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController
-@RequestMapping("/api")
-@RequiredArgsConstructor
+@RestController // 모든 메서드가 JSON 또는 HTTP 응답으로 반환
+@RequiredArgsConstructor // final로 선언된 멤버 변수의 생성자를 자동으로 생성
 public class UserController {
-
+	
+	@Autowired
     private final MemberRegistrationService memberRegistrationService;
-
+    
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<String> signup(@RequestBody Member member) {
         memberRegistrationService.registerUser(
-            signupRequest.getUsername(),
-            signupRequest.getPassword(),
-            signupRequest.getEmail(),
-            signupRequest.getNickname()
-        );
+                member.getUsername(), // 유저 ID
+                member.getPassword(), // 유저 PW
+                member.getEmail(),  // 유저 이메일
+                member.getNickname()); // 유저 닉네임
+        		member.getBirthDate(); // 유저의 생년월일
+        		member.getPhoneNumber(); // 유저의 전화번호
         return ResponseEntity.ok("회원가입에 성공하셨습니다.");
     }
+    
+    @GetMapping("/logout")
+	public String logout() {
+		return "redirect:/index";
+	}
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        // Login authentication logic can be implemented here.
-        return ResponseEntity.ok("로그인 성공");
+
+    @GetMapping("/auth")
+    public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) { // 현재 인증된 사용자의 정보를 가져옴.
+        if (user == null) {
+            return ResponseEntity.ok("로그인 상태가 아닙니다."); // 인증된 사용자가 없으면 "로그인 상태가 아닙니다." 반환
+        }
+        return ResponseEntity.ok(user); // 인증된 사용자가 있으면 사용자 정보를 JSON 형식으로 반환
     }
+
+    @GetMapping("/oauth2")
+    public @ResponseBody String auth(@AuthenticationPrincipal OAuth2User user) { // OAuth2 인증 사용자의 정보를 가져옴
+        if (user == null)
+            return "OAuth2:null"; // OAuth2 인증 사용자가 없으면 "OAuth2:null" 반환
+
+        // 자동 회원가입을 한다면 이용할 정보 확인
+        System.out.println("attributes:" + user.getAttributes());
+        return "OAuth2:" + user;
+    }
+
+   
 }

@@ -1,6 +1,7 @@
 package com.TripOrganizer.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -14,23 +15,27 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 import com.TripOrganizer.config.filter.JWTAuthenticationFilter;
 import com.TripOrganizer.config.filter.JWTAuthorizationFilter;
+import com.TripOrganizer.hander.OAuth2SuccessHandler;
 import com.TripOrganizer.persistence.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig { // 보안 설정 파일
 	
+	// 로그인에 성공하면 임의의 사용자를 생성해서 DB에 저장하고 JWT 토큰을 만들어서 응답헤더에 설정하는 핸들러
+	@Autowired
+	private final OAuth2SuccessHandler successHandler;
+
 	@Autowired
 	private AuthenticationConfiguration authenticationConfiguration;
-	
+
 	@Autowired
 	private MemberRepository memberRepository;
 
-	// BCrypt 암호화를 사용하여 비밀번호를 암호화
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -50,17 +55,18 @@ public class SecurityConfig { // 보안 설정 파일
 
 		// HttpBasic인증방식을사용하지않겠다는설정
 		http.httpBasic(basic -> basic.disable());
-		
-		 // 세션을유지하지않겠다고설정
+
+		// 세션을유지하지않겠다고설정
 		// Url 호출 뒤 응답할 때 까지는 유지되지만 응답 후 삭제된다는 의미
-		 http.sessionManagement(sm->sm
-				 	.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-		 
-		 // 스프링 시큐리티가 등록한 필터체인의 뒤에 작성한 필터를 추가한다
-			http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
-			
-			// 스프링 시큐리티가 등록한 필터들 중에서 AuthorizationFilter 앞에 앞에서 작성한 필터를 삽입한다.
-			http.addFilterBefore(new JWTAuthorizationFilter(memberRepository), AuthorizationFilter.class);
+		http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+		// 스프링 시큐리티가 등록한 필터체인의 뒤에 작성한 필터를 추가한다
+		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
+
+		// 스프링 시큐리티가 등록한 필터들 중에서 AuthorizationFilter 앞에 앞에서 작성한 필터를 삽입한다.
+		http.addFilterBefore(new JWTAuthorizationFilter(memberRepository), AuthorizationFilter.class);
+		
+		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
 
 		return http.build();
 	}

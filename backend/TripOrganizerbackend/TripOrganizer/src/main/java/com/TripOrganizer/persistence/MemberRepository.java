@@ -6,8 +6,4 @@ import com.TripOrganizer.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
 
-
-
-	
-
 }

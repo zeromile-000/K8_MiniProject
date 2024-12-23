@@ -50,5 +50,7 @@ public class Member {
     
     @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0") // 기본값 설정
     private Boolean isSocialUser;
+    
+    private boolean enabled;
 	
 }
