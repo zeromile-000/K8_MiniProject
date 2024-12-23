@@ -31,23 +31,23 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	 @Override
 	 public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 	 Authentication authentication) throws IOException, ServletException { //  인증된 사용자 정보를 기반으로 새로운 계정을 생성하고 JWT 토큰을 발급
-	 log.info("OAuth2SuccessHandler:onAuthenticationSuccess");
-	 OAuth2User user = (OAuth2User)authentication.getPrincipal(); // 객체에서 인증된 OAuth2 사용자의 정보를 가져오는 객체
+		 log.info("OAuth2SuccessHandler:onAuthenticationSuccess");
+		 OAuth2User user = (OAuth2User)authentication.getPrincipal(); // 객체에서 인증된 OAuth2 사용자의 정보를 가져오는 객체
 	
-	 // 임의의 사용자를 만들어서 서버에 저장
-	 String username = CustomMyUtil.getUsernameFromOAuth2User(user); // OAuth2 사용자 정보를 기반으로 사용자 이름을 생성
-	 if (username == null) { // 사용자 이름이 없을시 예외 발생
-	 log.error("onAuthenticationSuccess:Cannot generate username from oauth2user!");
-	 throw new ServletException("Cannot generate username from oauth2user!");
-	 }
-	 
-	 log.info("onAuthenticationSuccess:" + username);
-	 memRepo.save(Member.builder() // Member 객체를 생성하여 사용자 정보를 저장
-	 .username(username) 
-	 .password(encoder.encode("1a2s3d4f"))
-	 .role(Role.ROLE_MEMBER) //사용자는 기본적으로 ROLE_MEMBER 권한을 부여
-	 .enabled(true) // enabled=true) 상태로 저장
-	 .build()); 
+		 // 임의의 사용자를 만들어서 서버에 저장
+		 String username = CustomMyUtil.getUsernameFromOAuth2User(user); // OAuth2 사용자 정보를 기반으로 사용자 이름을 생성
+		 if (username == null) { // 사용자 이름이 없을시 예외 발생
+		 log.error("onAuthenticationSuccess:Cannot generate username from oauth2user!");
+		 throw new ServletException("Cannot generate username from oauth2user!");
+		 }
+		 
+		 log.info("onAuthenticationSuccess:" + username);
+		 memRepo.save(Member.builder() // Member 객체를 생성하여 사용자 정보를 저장
+		 .username(username) 
+		 .password(encoder.encode("1a2s3d4f"))
+		 .role(Role.ROLE_MEMBER) //사용자는 기본적으로 ROLE_MEMBER 권한을 부여
+		 .enabled(true) // enabled=true) 상태로 저장
+		 .build()); 
 	 
 	 String jwtToken = JWTUtil.getJWT(username); // 사용자 이름을 기반으로 JWT 토큰을 생성
 	 response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken); // 생성된 JWT 토큰을 HTTP 응답 헤더의 Authorization 필드에 추가

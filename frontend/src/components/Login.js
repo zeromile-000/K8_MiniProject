@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // React Router의 useNavigate 훅
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -15,7 +17,7 @@ const Login = () => {
       const response = await axios.post("http://localhost:8080/login", credentials);
       console.log("Login successful", response.data);
       setError("");
-      // 로그인 성공 후 처리 로직 추가
+      navigate("/"); // 로그인 성공 시 Home으로 이동
     } catch (err) {
       console.error("Login failed", err);
       setError("로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.");
@@ -57,19 +59,19 @@ const Login = () => {
           <div className="space-y-2">
             <a
               href="http://localhost:8080/oauth2/authorization/google"
-              className="block w-full py-2 text-white bg-red-500 rounded hover:bg-red-600"
+              className="flex items-center justify-center w-full py-2 text-white bg-red-500 rounded hover:bg-red-600"
             >
               구글 로그인
             </a>
             <a
               href="http://localhost:8080/oauth2/authorization/naver"
-              className="block w-full py-2 text-white bg-green-500 rounded hover:bg-green-600"
+              className="flex items-center justify-center w-full py-2 text-white bg-green-500 rounded hover:bg-green-600"
             >
               네이버 로그인
             </a>
             <a
               href="http://localhost:8080/oauth2/authorization/kakao"
-              className="block w-full py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600"
+              className="flex items-center justify-center w-full py-2 text-white bg-yellow-500 rounded hover:bg-yellow-600"
             >
               카카오 로그인
             </a>

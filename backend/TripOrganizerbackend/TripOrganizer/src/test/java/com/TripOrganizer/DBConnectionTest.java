@@ -28,10 +28,7 @@ public class  DBConnectionTest {
 				.password("1234s5")
 		        .role(Role.ROLE_MEMBER)
 		        .nickname("KIMJUNYEOUNG")
-		        .phoneNumber("01094985687")
 		        .email("zzz568s6@naver.com.com")
-		        .birthDate(new Date())
-		        .isSocialUser(false)
 		        .build());
 	}
 }

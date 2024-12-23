@@ -24,16 +24,11 @@ public class UserController {
     private final MemberRegistrationService memberRegistrationService;
     
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody Member member) {
-        memberRegistrationService.registerUser(
-                member.getUsername(), // 유저 ID
-                member.getPassword(), // 유저 PW
-                member.getEmail(),  // 유저 이메일
-                member.getNickname()); // 유저 닉네임
-        		member.getBirthDate(); // 유저의 생년월일
-        		member.getPhoneNumber(); // 유저의 전화번호
-        return ResponseEntity.ok("회원가입에 성공하셨습니다.");
-    }
+	public Member registerMember(@RequestBody Member member){
+		return memberRegistrationService.registerMember(member);
+	}
+    
+    
     
     @GetMapping("/logout")
 	public String logout() {
