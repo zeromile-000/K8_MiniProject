@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const Signup = () => {
     birthdate: new Date() // 수정됨
   });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,7 +49,7 @@ const Signup = () => {
       const response = await axios.post("http://localhost:8080/signup", formData);
       console.log("Signup successful", response.data);
       setError("");
-      // 회원가입 성공 후 처리 로직 추가
+      navigate("/")
     } catch (err) {
       console.error("Signup failed", err);
       setError("회원가입에 실패했습니다. 입력값을 확인하세요.");

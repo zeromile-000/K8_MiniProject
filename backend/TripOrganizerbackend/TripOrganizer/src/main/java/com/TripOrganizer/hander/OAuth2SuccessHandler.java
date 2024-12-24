@@ -33,6 +33,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	 Authentication authentication) throws IOException, ServletException { //  인증된 사용자 정보를 기반으로 새로운 계정을 생성하고 JWT 토큰을 발급
 		 log.info("OAuth2SuccessHandler:onAuthenticationSuccess");
 		 OAuth2User user = (OAuth2User)authentication.getPrincipal(); // 객체에서 인증된 OAuth2 사용자의 정보를 가져오는 객체
+		 System.out.println(user.toString());
 	
 		 // 임의의 사용자를 만들어서 서버에 저장
 		 String username = CustomMyUtil.getUsernameFromOAuth2User(user); // OAuth2 사용자 정보를 기반으로 사용자 이름을 생성
