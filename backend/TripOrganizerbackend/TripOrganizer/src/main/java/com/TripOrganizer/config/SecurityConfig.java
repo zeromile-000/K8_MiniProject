@@ -44,7 +44,7 @@ public class SecurityConfig { // 보안 설정 파일
 				.hasRole("ADMIN").anyRequest().permitAll());
 
 		http.csrf(cf -> cf.disable()); // csrf 설정 무효화
-
+		http.cors().and();
 		// 기본 로그인 기능을 사용
 		http.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/loginSuccess", false));
 		http.exceptionHandling(ex -> ex.accessDeniedPage("/accessDenied"));
@@ -58,7 +58,7 @@ public class SecurityConfig { // 보안 설정 파일
 
 		// 세션을유지하지않겠다고설정
 		// Url 호출 뒤 응답할 때 까지는 유지되지만 응답 후 삭제된다는 의미
-		http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		 http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		// 스프링 시큐리티가 등록한 필터체인의 뒤에 작성한 필터를 추가한다
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));

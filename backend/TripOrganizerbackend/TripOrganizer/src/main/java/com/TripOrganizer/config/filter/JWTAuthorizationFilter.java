@@ -33,7 +33,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		String jwtToken = srcToken.replace("Bearer", "");
+		String jwtToken = srcToken.replace("Bearer ", "");
 		
 		// 토큰에서 usernanme 추출
 		String username = JWT.require(Algorithm.HMAC256("com.TripOrganizer.jwt")).build().verify(jwtToken).getClaim("username").asString();

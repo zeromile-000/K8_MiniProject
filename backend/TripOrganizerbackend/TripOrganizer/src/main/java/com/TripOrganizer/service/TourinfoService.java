@@ -10,17 +10,19 @@ import com.TripOrganizer.persistence.TourinfoRepository;
 import lombok.RequiredArgsConstructor;
 
 
+
 @Service
 @RequiredArgsConstructor
 public class TourinfoService {
 	
+	private final TourinfoRepository tourinfoRepository;
+	
 	public List<Tourinfo> getAllDistricts() {
-        return TourinfoRepository.findAll();
+        return tourinfoRepository.findAll();
     }
 
-    // **[READ] 특정 District 조회**
     public Tourinfo getDistrictById(Long no) {
-        return TourinfoRepository.findById(no)
+        return tourinfoRepository.findById(no)
                 .orElseThrow(() -> new RuntimeException("District not found with no " + no));
     }
 
