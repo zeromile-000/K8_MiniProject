@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import DistrictDisplay from "./components/DistrictDisplay"; // DistrictDisplay 컴포넌트 임포트
 import TourInfo from "./components/TourInfo";
+import KakaoMap from "./components/KakaoMap";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
               <Link to="/signup" className="mx-4 text-lg">Sign Up</Link>
               <Link to="/districts" className="mx-4 text-lg">Districts</Link> 
               <Link to="/tourInfo" className="mx-4 text-lg">TourInfo</Link> 
+              <Link to="/kakaoMap" className="mx-4 text-lg">kakaoMap</Link> 
             </nav>
           </div>
         </header>
@@ -31,6 +33,7 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/districts" element={<DistrictDisplay />} /> 
               <Route path="/tourInfo" element={<TourInfo />} /> 
+              <Route path="/kakaoMap" element={<KakaoMap />} /> 
             </Routes>
           </div>
         </main>
