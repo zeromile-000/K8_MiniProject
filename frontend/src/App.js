@@ -6,6 +6,7 @@ import Signup from "./components/Signup";
 import DistrictDisplay from "./components/DistrictDisplay"; // DistrictDisplay 컴포넌트 임포트
 import TourInfo from "./components/TourInfo";
 import KakaoMap from "./components/KakaoMap";
+import TravelDetail from "./components/TravelDetail";
 
 const App = () => {
   return (
@@ -14,7 +15,6 @@ const App = () => {
         {/* 헤더 */}
         <header className="py-6 text-white bg-gradient-to-r from-blue-500 to-purple-600">
           <div className="container flex flex-wrap items-center justify-between mx-auto">
-            {/* 로고 및 홈 버튼 */}
             <HomeButton />
             <nav className="flex flex-wrap items-center justify-center mt-4 md:mt-0">
               <Link to="/" className="mx-2 text-sm md:text-lg hover:underline">
@@ -35,6 +35,9 @@ const App = () => {
               <Link to="/kakaoMap" className="mx-2 text-sm md:text-lg hover:underline">
                 KakaoMap
               </Link>
+              <Link to="/traveldetail" className="mx-2 text-sm md:text-lg hover:underline">
+              TravelDetail
+              </Link>
             </nav>
           </div>
         </header>
@@ -48,6 +51,7 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/districts" element={<DistrictDisplay />} />
               <Route path="/tourInfo" element={<TourInfo />} />
+              <Route path="/traveldetail" element={<TravelDetail />} />
               <Route path="/kakaoMap" element={<KakaoMap />} />
             </Routes>
           </div>
