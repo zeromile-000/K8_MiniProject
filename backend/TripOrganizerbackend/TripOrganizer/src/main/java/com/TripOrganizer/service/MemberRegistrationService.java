@@ -20,5 +20,8 @@ public class MemberRegistrationService {
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 	    return memberRepository.save(member);
 	}
+    public boolean checkUsernameExists(String username) {
+        return memberRepository.existsByUsername(username); // 중복 여부 반환
+    }
     
 }

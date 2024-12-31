@@ -35,9 +35,6 @@ const App = () => {
               <Link to="/kakaoMap" className="mx-2 text-sm md:text-lg hover:underline">
                 KakaoMap
               </Link>
-              <Link to="/traveldetail" className="mx-2 text-sm md:text-lg hover:underline">
-              TravelDetail
-              </Link>
             </nav>
           </div>
         </header>
@@ -51,7 +48,8 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/districts" element={<DistrictDisplay />} />
               <Route path="/tourInfo" element={<TourInfo />} />
-              <Route path="/traveldetail" element={<TravelDetail />} />
+              {/* <Route path="/traveldetail" element={<TravelDetail />} /> */}
+              <Route path="/traveldetail/:contentid" element={<TravelDetail />} />
               <Route path="/kakaoMap" element={<KakaoMap />} />
             </Routes>
           </div>

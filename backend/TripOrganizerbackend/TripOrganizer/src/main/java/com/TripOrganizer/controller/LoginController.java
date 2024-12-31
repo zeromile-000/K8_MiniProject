@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +28,11 @@ public class LoginController {
 	public Member registerMember(@RequestBody Member member){
 		return memberRegistrationService.registerMember(member);
 	}
+    
+    @GetMapping("/signup/check-username")
+    public boolean checkUsername(@RequestParam String username) {
+        return memberRegistrationService.checkUsernameExists(username); // 중복 여부 반환
+    }
     
     
     @GetMapping("/logout")
