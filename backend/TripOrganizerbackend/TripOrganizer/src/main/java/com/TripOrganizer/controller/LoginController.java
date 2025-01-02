@@ -34,12 +34,6 @@ public class LoginController {
         return memberRegistrationService.checkUsernameExists(username); // 중복 여부 반환
     }
     
-    
-    @GetMapping("/logout")
-	public String logout() {
-		return "redirect:/";
-	}
-
 
     @GetMapping("/auth")
     public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) { // 현재 인증된 사용자의 정보를 가져옴.

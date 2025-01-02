@@ -27,6 +27,7 @@ public class TourinfoController {
 	public Page<Tourinfo> getTourInfos(Integer pageNo) {
 		return tourinfoService.getLimitedTourInfos(pageNo);
 	}
+	
 	 @PostMapping("/getcontentid")
 	    public ResponseEntity<Long> getContentId(@RequestBody Map<String, Long> payload) {
 	        Long contentId = payload.get("contentid");
@@ -36,7 +37,7 @@ public class TourinfoController {
 	
 	
 	@GetMapping("/category")
-	public List<Tourinfo> getsigungucode(int sigungucode, int areacode, int contenttypeid){
+	public List<Tourinfo> getsigungucode(Integer sigungucode, Integer areacode, Integer contenttypeid){
 		return tourinfoService.getCategoryInfos(sigungucode, areacode, contenttypeid);
 	}
 	

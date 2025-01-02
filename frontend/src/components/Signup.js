@@ -73,11 +73,37 @@ const Signup = () => {
     try {
       const response = await axios.post("http://localhost:8080/signup", formData);
       console.log("Signup successful", response.data);
+
+      // 서버에서 JWT 토큰 반환 시 저장
+      const { token } = response.data; // 서버 응답에 포함된 토큰
+      localStorage.setItem("accessToken", token); // 로컬스토리지에 토큰 저장
       setError("");
-      navigate("/");
+      navigate("/"); // 회원가입 성공 후 리디렉션
     } catch (err) {
       console.error("Signup failed", err);
       setError("회원가입에 실패했습니다. 입력값을 확인하세요.");
+    }
+  };
+
+  // 인증된 API 요청
+  const fetchProtectedData = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      alert("로그인 후 이용하세요.");
+      return;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:8080/protected-endpoint", {
+        headers: {
+          Authorization: `Bearer ${token}`, // 헤더에 토큰 추가
+        },
+      });
+      console.log("Protected data:", response.data);
+    } catch (err) {
+      console.error("Failed to fetch protected data", err);
+      alert("데이터를 가져오는 데 실패했습니다. 다시 로그인하세요.");
     }
   };
 
@@ -162,6 +188,14 @@ const Signup = () => {
             가입하기
           </button>
         </form>
+
+        {/* 인증된 데이터 가져오기 버튼 */}
+        <button
+          onClick={fetchProtectedData}
+          className="w-full py-3 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
+        >
+          인증된 데이터 가져오기
+        </button>
       </div>
     </div>
   );
