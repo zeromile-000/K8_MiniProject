@@ -23,23 +23,19 @@ public class ActivityPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long plannerId; // 기본 키 설정 (순번)
 
-    @Column(nullable = false)
     private String plannerName; // 여행 제목
     
-    @Column(nullable = false)
     private LocalDate periodS; // 여행 시작 날짜
 
-    @Column(nullable = false)
     private LocalDate periodE; // 여행 종료 날짜
 
-    @Column(nullable = false)
     private LocalTime contentS; // 여행 시작 시간
 
-    @Column(nullable = false)
     private LocalTime contentE; // 여행 종료 시간
 
-    @Column(nullable = false)
     private Integer dayIndex; // 여행 일차
+    
+//    private 
 
     @CreationTimestamp // 엔티티가 저장될 때 현재 시간을 자동으로 설정
     @Column(updatable = false, nullable = false)

@@ -1,6 +1,5 @@
 package com.TripOrganizer.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -12,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TripOrganizer.domain.Tourinfo;
+import com.TripOrganizer.domain.dto.RequestDto;
 import com.TripOrganizer.service.TourinfoService;
 
 import lombok.RequiredArgsConstructor;
+
+
 
 @RestController
 @RequestMapping("/tourinfo")
@@ -23,9 +25,12 @@ public class TourinfoController {
 
 	private final TourinfoService tourinfoService;
 
+//	
+	
 	@GetMapping
-	public Page<Tourinfo> getTourInfos(Integer pageNo) {
-		return tourinfoService.getLimitedTourInfos(pageNo);
+	public Page<Tourinfo> getTourInfos(RequestDto requestDto) {
+		return tourinfoService.getLimitedTourInfos(requestDto);
+		
 	}
 	
 	 @PostMapping("/getcontentid")
@@ -36,13 +41,17 @@ public class TourinfoController {
 	    }
 	
 	
-	@GetMapping("/category")
-	public List<Tourinfo> getsigungucode(Integer sigungucode, Integer areacode, Integer contenttypeid){
-		return tourinfoService.getCategoryInfos(sigungucode, areacode, contenttypeid);
-	}
-	
-	
+//	@GetMapping("/category")
+//	public List<Tourinfo> getsigungucode(Integer sigungucode, Integer areacode, Integer contenttypeid, Integer pageno){
+//		return tourinfoService.getCategoryInfos(sigungucode, areacode, contenttypeid);
+//	}
 
+	//@GetMapping
+//	public Page<Tourinfo> getTourInfos(@RequestParam Integer pageNo) {
+//		return tourinfoService.getLimitedTourInfos(pageNo);
+//	}
+	
+	
 	
 
 }

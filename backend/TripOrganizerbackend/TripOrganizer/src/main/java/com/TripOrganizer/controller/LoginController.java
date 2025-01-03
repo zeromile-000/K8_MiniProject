@@ -29,7 +29,7 @@ public class LoginController {
 		return memberRegistrationService.registerMember(member);
 	}
     
-    @GetMapping("/signup/check-username")
+    @GetMapping("/signup/check")
     public boolean checkUsername(@RequestParam String username) {
         return memberRegistrationService.checkUsernameExists(username); // 중복 여부 반환
     }
