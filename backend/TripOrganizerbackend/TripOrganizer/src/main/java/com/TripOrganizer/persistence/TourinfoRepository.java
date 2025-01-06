@@ -8,9 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.TripOrganizer.domain.Tourinfo;
 
+@Repository
 public interface TourinfoRepository extends JpaRepository<Tourinfo, Long> {
 	
     Page<Tourinfo> findAll(Pageable pageable);

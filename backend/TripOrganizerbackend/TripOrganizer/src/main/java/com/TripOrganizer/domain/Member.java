@@ -20,7 +20,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "users")
 public class Member {
     @Id
     private String username;

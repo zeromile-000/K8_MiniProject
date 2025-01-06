@@ -21,13 +21,7 @@ public class ActivityPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plannerId; // 기본 키 설정 (순번)
-
-    private String plannerName; // 여행 제목
-    
-    private LocalDate periodS; // 여행 시작 날짜
-
-    private LocalDate periodE; // 여행 종료 날짜
+    private Long indexId; // 기본 키 설정 (순번)
 
     private LocalTime contentS; // 여행 시작 시간
 
@@ -35,17 +29,15 @@ public class ActivityPlan {
 
     private Integer dayIndex; // 여행 일차
     
-//    private 
-
     @CreationTimestamp // 엔티티가 저장될 때 현재 시간을 자동으로 설정
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt; // 생성일시
-
-    // Member 엔티티와의 다대일 관계
+    
+ // Planlist 엔티티와의 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username", nullable = true) // 외래 키로 설정
-    private Member user; // Member 엔티티와 연결된 사용자 정보
-
+    @JoinColumn(name = "planid", nullable = true) // 외래 키로 설정
+    private Planlist planlist; // Planlist 엔티티와 연결된 콘텐츠 정보
+    
     // Tourinfo 엔티티와의 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contentid", nullable = true) // 외래 키로 설정

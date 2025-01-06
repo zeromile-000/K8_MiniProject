@@ -1,7 +1,6 @@
 package com.TripOrganizer.persistence;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,13 +9,7 @@ import com.TripOrganizer.domain.Member;
 import com.TripOrganizer.domain.Planlist;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, String> {
-	boolean existsByUsername(String username);
-	
+public interface PlanlistRepository extends JpaRepository<Planlist, Long> {
 
-	
-	static Optional<Planlist> findByUsername(String username) {
-		return null;
-	}
-
+   List<Planlist> findByUsername(Member username);
 }
