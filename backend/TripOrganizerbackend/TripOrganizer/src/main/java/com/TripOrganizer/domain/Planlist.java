@@ -1,7 +1,9 @@
 package com.TripOrganizer.domain;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,15 +42,10 @@ public class Planlist {
     
     // Member 엔티티와의 다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username", nullable = true) // 외래 키로 설정
+    @JoinColumn(name = "username", nullable = false) // 외래 키로 설정
     private Member username; // Member 엔티티와 연결된 사용자 정보
     
-    
-    
-    
-    
-    
-    
-	
+    @OneToMany(mappedBy = "planlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActivityPlan> activityPlans; // ActivityPlan과의 관계
 
 }

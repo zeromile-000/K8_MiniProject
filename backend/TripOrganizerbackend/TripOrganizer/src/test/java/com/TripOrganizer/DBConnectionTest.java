@@ -10,10 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.TripOrganizer.domain.ActivityPlan;
 import com.TripOrganizer.domain.Member;
 import com.TripOrganizer.domain.Role;
 import com.TripOrganizer.domain.Tourinfo;
 import com.TripOrganizer.domain.dto.RequestDto;
+import com.TripOrganizer.persistence.ActivityPlanRepository;
 import com.TripOrganizer.persistence.MemberRepository;
 import com.TripOrganizer.persistence.TourinfoRepository;
 
@@ -30,6 +32,9 @@ public class  DBConnectionTest {
 	@Autowired
 	TourinfoRepository tourinfoRepository;
 	
+	@Autowired
+	ActivityPlanRepository activityPlanRepository;
+	
 //	@Test
 	public void resist() {
 		memberRepo.save(Member.builder()
@@ -41,7 +46,7 @@ public class  DBConnectionTest {
 		        .build());
 	}
 	
-	@Test
+//	@Test
 	public void test() {
 		Pageable pageable = PageRequest.of(0, 16); 
 		 Page<Tourinfo> page = tourinfoRepository.findByAreacodeAndSigungucodeAndContenttypeid(
@@ -50,6 +55,14 @@ public class  DBConnectionTest {
 				12,
 				pageable);
 		 System.out.println("Page" + page);
+	}
+	
+	@Test
+	public void test1() {
+		List<ActivityPlan> list = activityPlanRepository.findByPlanlistPlanId(1L);
+		for(ActivityPlan a : list) {
+			System.out.println(a);
+		}
 	}
 }
 
