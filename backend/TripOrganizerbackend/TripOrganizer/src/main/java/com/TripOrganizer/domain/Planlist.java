@@ -1,7 +1,10 @@
 package com.TripOrganizer.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -41,11 +44,14 @@ public class Planlist {
     private LocalDate periodE; // 여행 종료 날짜
     
     // Member 엔티티와의 다대일 관계
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username", nullable = false) // 외래 키로 설정
-    private Member username; // Member 엔티티와 연결된 사용자 정보
+    private Member member; // Member 엔티티와 연결된 사용자 정보
     
+    @Builder.Default
+    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(mappedBy = "planlist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ActivityPlan> activityPlans; // ActivityPlan과의 관계
+    private List<ActivityPlan> activityPlans = new ArrayList<>();
 
 }

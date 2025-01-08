@@ -35,10 +35,13 @@ public class ActivityPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "index_id")
     private Long indexId; // 기본 키 설정 (순번)
-
+    
+    @Column(name = "contents")
     private LocalTime contentS; // 여행 시작 시간
-
+    
+    @Column(name = "contente")
     private LocalTime contentE; // 여행 종료 시간
 
     private Long dayIndex; // 여행 일차
@@ -48,18 +51,15 @@ public class ActivityPlan {
     private LocalDateTime createdAt; // 생성일시
     
  // Planlist 엔티티와의 다대일 관계
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "planid", nullable = false) // 외래 키로 설정
-//  
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "planId", nullable = false)
-    @JsonBackReference  // Planlist를 직렬화하지 않음
+    //@JsonBackReference  // Planlist를 직렬화하지 않음
     private Planlist planlist; // Planlist 엔티티와 연결된 콘텐츠 정보
     
     // Tourinfo 엔티티와의 다대일 관계
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contentid", nullable = false) // 외래 키로 설정
-    @JsonBackReference 
+    //@JsonBackReference 
     private Tourinfo tourinfo; // Tourinfo 엔티티와 연결된 콘텐츠 정보
 
 }

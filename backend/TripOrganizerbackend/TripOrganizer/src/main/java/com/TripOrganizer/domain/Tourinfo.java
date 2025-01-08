@@ -33,5 +33,4 @@ public class Tourinfo {
 	private String firstimage;
 	private double mapx;
 	private double mapy;
-	
 }

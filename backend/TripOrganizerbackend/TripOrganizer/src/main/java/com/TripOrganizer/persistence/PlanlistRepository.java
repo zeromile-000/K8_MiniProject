@@ -10,6 +10,5 @@ import com.TripOrganizer.domain.Planlist;
 
 @Repository
 public interface PlanlistRepository extends JpaRepository<Planlist, Long> {
-
-   List<Planlist> findByUsername(Member username);
+	List<Planlist> findByMemberUsername(String username);
 }

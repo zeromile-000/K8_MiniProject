@@ -1,15 +1,18 @@
 package com.TripOrganizer.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.TripOrganizer.domain.Member;
 import com.TripOrganizer.domain.Planlist;
+import com.TripOrganizer.domain.dto.PlanlistDTO;
 import com.TripOrganizer.domain.dto.PlanlistRequest;
 import com.TripOrganizer.persistence.MemberRepository;
 import com.TripOrganizer.persistence.PlanlistRepository;
 
 import lombok.RequiredArgsConstructor;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,29 +20,39 @@ public class PlanlistService {
 
     private final PlanlistRepository planlistRepository;
     private final MemberRepository memReop;
+
+    
+    
     // 생성: Planlist 저장
     public void createPlan(PlanlistRequest planlistRequest) {
-    	
     		Member member = memReop.findById(planlistRequest.getUsername()).orElse(null);
     	    Planlist planlist = new Planlist();
     	    planlist.setPlannerName(planlistRequest.getPlannerName());
     	    planlist.setPeriodS(planlistRequest.getPeriodS());
     	    planlist.setPeriodE(planlistRequest.getPeriodE());
-    	    planlist.setUsername(member);
+    	    planlist.setMember(member);
     	    planlistRepository.save(planlist);
     }
     
-    public List<Planlist> findByUsername(String username) { // 유저아이디 정보로 플래너 정보 불러오기(멤버 조회)
-    	Member member = memReop.findById(username).orElse(null);
-    	return planlistRepository.findByUsername(member);
+    public List<PlanlistDTO> findByUsername(String username) {
+        List<Planlist> planlists = planlistRepository.findByMemberUsername(username);
+        return planlists.stream().map(planlist -> {
+            PlanlistDTO dto = new PlanlistDTO();
+            dto.setPlanId(planlist.getPlanId());
+            dto.setPlannerName(planlist.getPlannerName());
+            dto.setPeriodS(planlist.getPeriodS().toString());
+            dto.setPeriodE(planlist.getPeriodE().toString());
+            dto.setUsername(planlist.getMember().getUsername());
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     // 수정: 특정 Planlist 업데이트
-    public Planlist updatePlan(Long id, Planlist updatedPlan) {
+    public Planlist updatePlan(Long id, Planlist planlist) {
         return planlistRepository.findById(id).map(plan -> {
-            plan.setPeriodE(updatedPlan.getPeriodE());
-            plan.setPeriodS(updatedPlan.getPeriodS());
-            plan.setPlannerName(updatedPlan.getPlannerName());
+            plan.setPeriodE(planlist.getPeriodE());
+            plan.setPeriodS(planlist.getPeriodS());
+            plan.setPlannerName(planlist.getPlannerName());
             return planlistRepository.save(plan);
         }).orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
     }
