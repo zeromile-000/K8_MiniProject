@@ -52,7 +52,7 @@ function TravelDetail() {
 
   useEffect(() => {
     const script = document.createElement("script");
-    const kakao_API = process.env.REACT_APP_KAKAO_MAP_KEY;
+    const kakao_API = process.env.REACT_APP_KAKAO_MAP_KEY; // REACT_APP_KAKAO_MAP_KEY = "b376ac2b6a55d7841d4aaf7f08fa3d99"
 
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakao_API}&autoload=false`;
     script.async = true;

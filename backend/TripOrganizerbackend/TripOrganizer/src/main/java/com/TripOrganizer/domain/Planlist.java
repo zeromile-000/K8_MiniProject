@@ -43,6 +43,12 @@ public class Planlist {
     
     private LocalDate periodE; // 여행 종료 날짜
     
+    private String packinglist; // 여행 준비물
+    
+    private String route; // 동선
+    
+    private String todolist; // 할 일
+    
     // Member 엔티티와의 다대일 관계
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username", nullable = false) // 외래 키로 설정

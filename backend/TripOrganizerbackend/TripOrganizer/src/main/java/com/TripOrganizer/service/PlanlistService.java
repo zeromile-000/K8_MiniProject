@@ -30,19 +30,26 @@ public class PlanlistService {
     	    planlist.setPlannerName(planlistRequest.getPlannerName());
     	    planlist.setPeriodS(planlistRequest.getPeriodS());
     	    planlist.setPeriodE(planlistRequest.getPeriodE());
+    	    planlist.setPackinglist(planlistRequest.getPackinglist());
+    	    planlist.setRoute(planlistRequest.getRoute());
+    	    planlist.setTodolist(planlistRequest.getTodolist());
     	    planlist.setMember(member);
     	    planlistRepository.save(planlist);
     }
     
     public List<PlanlistDTO> findByUsername(String username) {
         List<Planlist> planlists = planlistRepository.findByMemberUsername(username);
+
         return planlists.stream().map(planlist -> {
             PlanlistDTO dto = new PlanlistDTO();
             dto.setPlanId(planlist.getPlanId());
             dto.setPlannerName(planlist.getPlannerName());
-            dto.setPeriodS(planlist.getPeriodS().toString());
-            dto.setPeriodE(planlist.getPeriodE().toString());
-            dto.setUsername(planlist.getMember().getUsername());
+            dto.setPeriodS(planlist.getPeriodS() != null ? planlist.getPeriodS().toString() : "");
+            dto.setPeriodE(planlist.getPeriodE() != null ? planlist.getPeriodE().toString() : "");
+            dto.setPackinglist(planlist.getPackinglist() != null ? planlist.getPackinglist().toString() : "");
+            dto.setRoute(planlist.getRoute() != null ? planlist.getRoute().toString() : "");
+            dto.setTodolist(planlist.getTodolist() != null ? planlist.getTodolist().toString() : "");
+            dto.setUsername(planlist.getMember() != null ? planlist.getMember().getUsername() : "");
             return dto;
         }).collect(Collectors.toList());
     }
@@ -53,6 +60,9 @@ public class PlanlistService {
             plan.setPeriodE(planlist.getPeriodE());
             plan.setPeriodS(planlist.getPeriodS());
             plan.setPlannerName(planlist.getPlannerName());
+            plan.setPackinglist(planlist.getPackinglist());
+            plan.setRoute(planlist.getRoute());
+            plan.setTodolist(planlist.getTodolist());
             return planlistRepository.save(plan);
         }).orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
     }
