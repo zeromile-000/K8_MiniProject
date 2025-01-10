@@ -57,12 +57,12 @@ public class PlanlistService {
     // 수정: 특정 Planlist 업데이트
     public Planlist updatePlan(Long id, Planlist planlist) {
         return planlistRepository.findById(id).map(plan -> {
-            plan.setPeriodE(planlist.getPeriodE());
-            plan.setPeriodS(planlist.getPeriodS());
-            plan.setPlannerName(planlist.getPlannerName());
-            plan.setPackinglist(planlist.getPackinglist());
-            plan.setRoute(planlist.getRoute());
-            plan.setTodolist(planlist.getTodolist());
+            plan.setPeriodE(planlist.getPeriodE() != null ? planlist.getPeriodE() : plan.getPeriodE());
+            plan.setPeriodS(planlist.getPeriodS() != null ? planlist.getPeriodS() : plan.getPeriodS());
+            plan.setPlannerName(planlist.getPlannerName() != null ? planlist.getPlannerName() : plan.getPlannerName());
+            plan.setPackinglist(planlist.getPackinglist() != null ? planlist.getPackinglist() : plan.getPackinglist()) ;
+            plan.setRoute(planlist.getRoute()!= null ? planlist.getRoute() : plan.getRoute());
+            plan.setTodolist(planlist.getTodolist()!= null ? planlist.getTodolist() : plan.getTodolist());
             return planlistRepository.save(plan);
         }).orElseThrow(() -> new IllegalArgumentException("Plan not found with id: " + id));
     }

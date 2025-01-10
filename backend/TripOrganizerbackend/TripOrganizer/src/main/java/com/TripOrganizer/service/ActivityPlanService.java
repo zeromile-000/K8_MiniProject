@@ -40,9 +40,9 @@ public class ActivityPlanService {
 
 	public ActivityPlan updateActivityPlan(Long indexId, ActivityPlan ActivityPlan) {
 		return activityPlanRepository.findById(indexId).map(updatePlan -> {
-			updatePlan.setContentS(ActivityPlan.getContentS()); // 여행시작시간 수정
-			updatePlan.setContentE(ActivityPlan.getContentE()); // 여행종료시간 수정
-			updatePlan.setDayIndex(ActivityPlan.getDayIndex()); // N일차 수정
+			updatePlan.setContentS(ActivityPlan.getContentS() != null ? ActivityPlan.getContentS() : updatePlan.getContentS()); // 여행시작시간 수정
+			updatePlan.setContentE(ActivityPlan.getContentE() != null ? ActivityPlan.getContentE() : updatePlan.getContentE()); // 여행종료시간 수정
+			updatePlan.setDayIndex(ActivityPlan.getDayIndex() != null ? ActivityPlan.getDayIndex() : updatePlan.getDayIndex()); // N일차 수정
 			return activityPlanRepository.save(updatePlan);
 		}).orElseThrow(() -> new RuntimeException("ActivityPlan not found"));
 	}

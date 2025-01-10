@@ -51,8 +51,8 @@ public class ActivityPlanController {
     }
     
     @PutMapping // indexId를 기준으로 여행 예약 데이터 수정
-    public ResponseEntity<ActivityPlan> updateActivityPlan(@RequestParam Long indexId, @RequestBody ActivityPlan ActivityPlan) {
-        ActivityPlan updatedPlan = activityPlanService.updateActivityPlan(indexId, ActivityPlan);
+    public ResponseEntity<ActivityPlan> updateActivityPlan(@RequestParam Long indexId, @RequestBody ActivityPlan activityPlan) {
+        ActivityPlan updatedPlan = activityPlanService.updateActivityPlan(indexId, activityPlan);
         return ResponseEntity.ok(updatedPlan);
     }
     
